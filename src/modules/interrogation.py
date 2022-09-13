@@ -6,8 +6,9 @@ import time
 class Interrogation:
     """
         Convert speech recorded from mic and return the transcript of the speech using SpeechRecognizer module with Pocketsphinx API.
+        This required using python 3.6 since Pocketsphinx API only support python 3.6.
     """    
-    def __init__(self, mic_index):
+    def __init__(self, mic_index=1):
         """ Initial Setup for recognizer and the mic
 
         Args:
@@ -26,13 +27,9 @@ class Interrogation:
         
         with self.mic as source:
             # Adjust the mic with teh ambinet noise
-            print('adjusting the noise')
             self.recognizer.adjust_for_ambient_noise(source, duration=1)
-            print('Finished! count down in 5')\
-
-            time.sleep(5)
             print('listening...')
-            audio = self.recognizer.listen(source, timeout=20, phrase_time+)
+            audio = self.recognizer.listen(source, timeout=10, phrase_time=20)
 
         try:
             return self.recognizer.recognize_sphinx(audio)
